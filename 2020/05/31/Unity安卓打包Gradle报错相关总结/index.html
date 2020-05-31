@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Unity安卓打包Gradle报错相关总结 | GrasonFu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Unity安卓打包Gradle报错​                前几天被这个问题整的死去活来的，打包的时候出现以下问题: 1CommandInvokationFailure: Gradle build failed. C:&#x2F;Program Files&#x2F;Java&#x2F;jdk1.7.0_80\bin\java.exe -classpath &quot;D:\Program">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity安卓打包Gradle报错相关总结">
+<meta property="og:url" content="http://yoursite.com/2020/05/31/Unity%E5%AE%89%E5%8D%93%E6%89%93%E5%8C%85Gradle%E6%8A%A5%E9%94%99%E7%9B%B8%E5%85%B3%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="GrasonFu">
+<meta property="og:description" content="Unity安卓打包Gradle报错​                前几天被这个问题整的死去活来的，打包的时候出现以下问题: 1CommandInvokationFailure: Gradle build failed. C:&#x2F;Program Files&#x2F;Java&#x2F;jdk1.7.0_80\bin\java.exe -classpath &quot;D:\Program">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-05-31T09:03:20.000Z">
+<meta property="article:modified_time" content="2020-05-31T09:33:28.438Z">
+<meta property="article:author" content="Grason">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="GrasonFu" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">GrasonFu</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Unity安卓打包Gradle报错相关总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/05/31/Unity%E5%AE%89%E5%8D%93%E6%89%93%E5%8C%85Gradle%E6%8A%A5%E9%94%99%E7%9B%B8%E5%85%B3%E6%80%BB%E7%BB%93/" class="article-date">
+  <time datetime="2020-05-31T09:03:20.000Z" itemprop="datePublished">2020-05-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Unity安卓打包Gradle报错相关总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Unity安卓打包Gradle报错"><a href="#Unity安卓打包Gradle报错" class="headerlink" title="Unity安卓打包Gradle报错"></a>Unity安卓打包Gradle报错</h1><p>​                前几天被这个问题整的死去活来的，打包的时候出现以下问题:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CommandInvokationFailure: Gradle build failed. C:&#x2F;Program Files&#x2F;Java&#x2F;jdk1.7.0_80\bin\java.exe -classpath &quot;D:\Program Files\Unity\Editor\Data\PlaybackEngines\AndroidPlayer\Tools\gradle\lib\gradle-launcher-4.0.1.jar&quot; org.gradle.launcher.GradleMain &quot;-Dorg.gradle.jvmargs&#x3D;-Xmx2048m&quot;</span><br></pre></td></tr></table></figure>
+
+<p>​        还有一些说你的gradle5.1版本里的buf内容与当前版本不匹配，于是需要升级到gradle6.0，然后我升级了，之后又说你的的gradle6.0版本里的部分内容与当前版本不匹配，于是需要升级到gradle7.0，这是在逗我?gradle的版本现在最新也就6.4.1，然后我又考虑到装Unity的时候会有一些Gradle文件默认下载并没有下全，于是又翻墙重下了一遍，发现还是没用，然后就到下载gradle的地方从gradle5.1版本一个一个往上试，没有行的，没办法了，就一点点打日志查看，报错依旧很顽固，折腾了很长时间，最后发现，在Unity打包的时候会在C盘路径下会有一个.gradle的文件，Unity中Edit-&gt;Preferences-&gt;External Tools下最下面有这个.gradle的路径，而我的这个路径名存在中文，抱着尝试的心态把中文路径名给改了，发现最后问题解决了，最后学到教训，规范管理自己的软件，科学上网，否则，不知道哪天就会在这些细节上浪费大量时间和精力【无奈<del>~</del>】。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/05/31/Unity%E5%AE%89%E5%8D%93%E6%89%93%E5%8C%85Gradle%E6%8A%A5%E9%94%99%E7%9B%B8%E5%85%B3%E6%80%BB%E7%BB%93/" data-id="ckauva7nt0000c0no8i6md9bl" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/05/31/Unity%E4%B9%8B%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E4%B8%8E%E4%BC%98%E5%8C%96/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Unity之资源加载与优化</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/05/31/Unity%E5%AE%89%E5%8D%93%E6%89%93%E5%8C%85Gradle%E6%8A%A5%E9%94%99%E7%9B%B8%E5%85%B3%E6%80%BB%E7%BB%93/">Unity安卓打包Gradle报错相关总结</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/31/Unity%E4%B9%8B%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E4%B8%8E%E4%BC%98%E5%8C%96/">Unity之资源加载与优化</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Grason<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
