@@ -7,15 +7,15 @@
   
   <title>Unity资源加载与优化续 | GrasonFu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="AssetBundle续​        上周关于AssetBundle只更新了开头，所以这次尽量把它更新完整，接下来要说的是加载包体内的 AssetBundle。代码如下： 12345678910111213141516171819202122using System.IO;using UnityEngine;public class TestAssetLoad : MonoBehaviour&amp;">
+  <meta name="description" content="AssetBundle续​        这周末真的和上班没多大区别，这里就做简单的叙述，ab打包内容还剩一点，接下来要说的是加载包体内的AssetBundle。代码如下： 12345678910111213141516171819202122using System.IO;using UnityEngine;public class TestAssetLoad : MonoBehaviour&amp;#">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Unity资源加载与优化续">
 <meta property="og:url" content="http://yoursite.com/2020/06/07/Unity%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E4%B8%8E%E4%BC%98%E5%8C%96%E7%BB%AD/index.html">
 <meta property="og:site_name" content="GrasonFu">
-<meta property="og:description" content="AssetBundle续​        上周关于AssetBundle只更新了开头，所以这次尽量把它更新完整，接下来要说的是加载包体内的 AssetBundle。代码如下： 12345678910111213141516171819202122using System.IO;using UnityEngine;public class TestAssetLoad : MonoBehaviour&amp;">
+<meta property="og:description" content="AssetBundle续​        这周末真的和上班没多大区别，这里就做简单的叙述，ab打包内容还剩一点，接下来要说的是加载包体内的AssetBundle。代码如下： 12345678910111213141516171819202122using System.IO;using UnityEngine;public class TestAssetLoad : MonoBehaviour&amp;#">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-06-07T01:05:34.000Z">
-<meta property="article:modified_time" content="2020-06-07T08:42:23.740Z">
+<meta property="article:modified_time" content="2020-06-07T08:48:50.224Z">
 <meta property="article:author" content="Grason">
 <meta name="twitter:card" content="summary">
   
@@ -92,8 +92,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="AssetBundle续"><a href="#AssetBundle续" class="headerlink" title="AssetBundle续"></a>AssetBundle续</h1><p>​        上周关于AssetBundle只更新了开头，所以这次尽量把它更新完整，接下来要说的是加载包体内的</p>
-<p>AssetBundle。代码如下：</p>
+        <h1 id="AssetBundle续"><a href="#AssetBundle续" class="headerlink" title="AssetBundle续"></a>AssetBundle续</h1><p>​        这周末真的和上班没多大区别，这里就做简单的叙述，ab打包内容还剩一点，接下来要说的是加载包体内的AssetBundle。代码如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">using System.IO;</span><br><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class TestAssetLoad : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        AssetBundle assetBundle &#x3D; AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, &quot;StreamingAssets&quot;));</span><br><span class="line">        AssetBundleManifest manifest &#x3D; assetBundle.LoadAsset&lt;AssetBundleManifest&gt;(&quot;AssetBundleManifest&quot;);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;加载AssetBundle前，需要加载依赖的Bundle，获取给定资源包的所有相关资源包</span><br><span class="line">        foreach (var item in manifest.GetAllDependencies(&quot;object.unity3d&quot;))</span><br><span class="line">        &#123;</span><br><span class="line">            AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, item));</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;读取Bundle</span><br><span class="line">        assetBundle &#x3D; AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, &quot;object.unity3d&quot;));</span><br><span class="line">        &#x2F;&#x2F;从Bundle中读取资源</span><br><span class="line">        GameObject prefab &#x3D; assetBundle.LoadAsset&lt;GameObject&gt;(&quot;Object&quot;);</span><br><span class="line">        &#x2F;&#x2F;实例化资源</span><br><span class="line">        GameObject.Instantiate&lt;GameObject&gt;(prefab);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 <p>​        包体内的ab包只能放在StreamingAssets目录下，用AssetBundle.LoadFromfile()或AssetBundle.LoadFromFileAsync()方法进行同步或异步加载。也可以通过UnityWebRequest类进行联网下载，这部分内容以后我会做个联网小游戏进行实际演示，这里就不再赘述。</p>
