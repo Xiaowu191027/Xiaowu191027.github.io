@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Unity资源加载与优化续 | GrasonFu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="AssetBundle续​        上周关于AssetBundle只更新了开头，所以这次尽量把它更新完整，接下来要说的是加载包体内的 AssetBundle。代码如下： 12345678910111213141516171819202122using System.IO;using UnityEngine;public class TestAssetLoad : MonoBehaviour&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity资源加载与优化续">
+<meta property="og:url" content="http://yoursite.com/2020/06/07/Unity%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E4%B8%8E%E4%BC%98%E5%8C%96%E7%BB%AD/index.html">
+<meta property="og:site_name" content="GrasonFu">
+<meta property="og:description" content="AssetBundle续​        上周关于AssetBundle只更新了开头，所以这次尽量把它更新完整，接下来要说的是加载包体内的 AssetBundle。代码如下： 12345678910111213141516171819202122using System.IO;using UnityEngine;public class TestAssetLoad : MonoBehaviour&amp;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-06-07T01:05:34.000Z">
+<meta property="article:modified_time" content="2020-06-07T08:42:23.740Z">
+<meta property="article:author" content="Grason">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="GrasonFu" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">GrasonFu</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">I am going Faster,Faster than I ever been!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Unity资源加载与优化续" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/07/Unity%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E4%B8%8E%E4%BC%98%E5%8C%96%E7%BB%AD/" class="article-date">
+  <time datetime="2020-06-07T01:05:34.000Z" itemprop="datePublished">2020-06-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Unity资源加载与优化续
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="AssetBundle续"><a href="#AssetBundle续" class="headerlink" title="AssetBundle续"></a>AssetBundle续</h1><p>​        上周关于AssetBundle只更新了开头，所以这次尽量把它更新完整，接下来要说的是加载包体内的</p>
+<p>AssetBundle。代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">using System.IO;</span><br><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class TestAssetLoad : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        AssetBundle assetBundle &#x3D; AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, &quot;StreamingAssets&quot;));</span><br><span class="line">        AssetBundleManifest manifest &#x3D; assetBundle.LoadAsset&lt;AssetBundleManifest&gt;(&quot;AssetBundleManifest&quot;);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;加载AssetBundle前，需要加载依赖的Bundle，获取给定资源包的所有相关资源包</span><br><span class="line">        foreach (var item in manifest.GetAllDependencies(&quot;object.unity3d&quot;))</span><br><span class="line">        &#123;</span><br><span class="line">            AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, item));</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;读取Bundle</span><br><span class="line">        assetBundle &#x3D; AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, &quot;object.unity3d&quot;));</span><br><span class="line">        &#x2F;&#x2F;从Bundle中读取资源</span><br><span class="line">        GameObject prefab &#x3D; assetBundle.LoadAsset&lt;GameObject&gt;(&quot;Object&quot;);</span><br><span class="line">        &#x2F;&#x2F;实例化资源</span><br><span class="line">        GameObject.Instantiate&lt;GameObject&gt;(prefab);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>​        包体内的ab包只能放在StreamingAssets目录下，用AssetBundle.LoadFromfile()或AssetBundle.LoadFromFileAsync()方法进行同步或异步加载。也可以通过UnityWebRequest类进行联网下载，这部分内容以后我会做个联网小游戏进行实际演示，这里就不再赘述。</p>
+<p>​                             </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/06/07/Unity%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E4%B8%8E%E4%BC%98%E5%8C%96%E7%BB%AD/" data-id="ckb4dlzvl000044no0w1z5ies" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/05/31/Unity%E5%AE%89%E5%8D%93%E6%89%93%E5%8C%85Gradle%E6%8A%A5%E9%94%99%E7%9B%B8%E5%85%B3%E6%80%BB%E7%BB%93/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Unity安卓打包Gradle报错相关总结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/06/07/Unity%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E4%B8%8E%E4%BC%98%E5%8C%96%E7%BB%AD/">Unity资源加载与优化续</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/31/Unity%E5%AE%89%E5%8D%93%E6%89%93%E5%8C%85Gradle%E6%8A%A5%E9%94%99%E7%9B%B8%E5%85%B3%E6%80%BB%E7%BB%93/">Unity安卓打包Gradle报错相关总结</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/31/Unity%E4%B9%8B%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E4%B8%8E%E4%BC%98%E5%8C%96/">Unity之资源加载与优化</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Grason<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
