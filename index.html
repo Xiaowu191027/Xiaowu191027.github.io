@@ -70,6 +70,108 @@
       <div class="outer">
         <section id="main">
   
+    <article id="w-算法之算法分析" class="article article-type-w" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/10/%E7%AE%97%E6%B3%95%E4%B9%8B%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/" class="article-date">
+  <time datetime="2020-06-10T14:29:54.000Z" itemprop="datePublished">2020-06-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/10/%E7%AE%97%E6%B3%95%E4%B9%8B%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/">算法之算法分析</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h2><p>​        算法分析是关于计算机程序性能和资源利用的理论研究,在软件设计中除了计算机程序性能，还有程序的正确性，简洁性，可维护性，稳定性，特征性，功能性，模块化(优点是修改时只需修改局部即可)，安全性，可扩展性等也很重要。</p>
+<h3 id="一-插入排序"><a href="#一-插入排序" class="headerlink" title="一.插入排序"></a>一.插入排序</h3><p>算法分析:</p>
+<ol>
+<li><p>从第一个元素开始，该元素可以认为已经被排序 </p>
+</li>
+<li><p>取出下一个元素，在已经排序的元素序列中从后向前扫描 </p>
+</li>
+<li><p>如果该元素（已排序）大于新元素，将该元素移到下一位置 </p>
+</li>
+<li><p>重复步骤3，直到找到已排序的元素小于或者等于新元素的位置 </p>
+</li>
+<li><p>将新元素插入到下一位置中 </p>
+</li>
+<li><p>重复步骤2</p>
+<p>代码如下:</p>
+</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insertSort</span><span class="params">(<span class="keyword">int</span>* arr,<span class="keyword">long</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> i=<span class="number">0</span>,j=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> tmpData;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;len;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		j=i;</span><br><span class="line">        <span class="comment">//临时变量储存数组中的第i+1个元素，数组下标是从0开始的</span></span><br><span class="line">		tmpData=*(arr + i);</span><br><span class="line">        <span class="comment">//将临时变量与数组的上一个做比较，如果比上一个小就把上一个数往后移一位，并把这个数继续和再上一个数做比较以此类推，如果比再上一个数大或者遍历到第一个数时跳出循环，就把上一个数的位置赋值成这个临时变量</span></span><br><span class="line">		<span class="keyword">while</span>(j &gt; <span class="number">0</span> &amp;&amp; tmpData &lt; arr[j<span class="number">-1</span>])</span><br><span class="line">		&#123;</span><br><span class="line">            <span class="comment">//如果这个数比之前的某个数小，就把这个数用之前的数替代</span></span><br><span class="line">			arr[j]=arr[j<span class="number">-1</span>];</span><br><span class="line">			j--;</span><br><span class="line">		&#125;</span><br><span class="line">        </span><br><span class="line">		arr[j]=tmpData;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>插入排序的基本思想就是每次处理就是将无序数列的第一个元素与有序数列的元素从后往前逐个进行比较，找出插入位置，将该元素插入到有序数列的合适位置中，插入排序最坏的情况就是全部逆序，插入排序适用于一个数列中已经有些部分是有序的。</p>
+<h3 id="二-算法分析分类"><a href="#二-算法分析分类" class="headerlink" title="二.算法分析分类"></a>二.算法分析分类</h3><p>​    1.最坏情况分析</p>
+<p>​        T(n)=输入规模为n时的最长运行时间</p>
+<p>​    2.常见情况分析</p>
+<p>​        T(n)=输入规模为n时所有可能输入的期望值时间</p>
+<p>数学期望表示忘得差不多了，复习一下概率论:</p>
+<h4 id="离散型"><a href="#离散型" class="headerlink" title="离散型"></a>离散型</h4><p>如果随机变量只取得有限个值或无穷能按一定次序一一列出，其值域为一个或若干个有限或无限区间，这样的随机变量称为离散型随机变量。</p>
+<p>离散型随机变量的一切可能的取值 <img src="https://bkimg.cdn.bcebos.com/formula/f9a84e006fe5f29b26a0a1ba8f53c485.svg" alt="img"> 与对应的概率 <img src="https://bkimg.cdn.bcebos.com/formula/019ca807cb31a36c9a0202274262b912.svg" alt="img"> 乘积之和称为该离散型随机变量的数学期望 (若该求和绝对收敛），记为它是简单算术平均的一种推广，类似加权平均。</p>
+<h5 id="公式"><a href="#公式" class="headerlink" title="公式"></a>公式</h5><p>离散型随机变量X的取值为</p>
+<p> <img src="https://bkimg.cdn.bcebos.com/formula/d2759aea28e2c9d75298e4e5b5ce5194.svg" alt="img"> ， <img src="https://bkimg.cdn.bcebos.com/formula/ea336db177eaf7cc482d0d48558a8b87.svg" alt="img"> 为X对应取值的概率，可理解为数据 <img src="https://bkimg.cdn.bcebos.com/formula/d2759aea28e2c9d75298e4e5b5ce5194.svg" alt="img"> 出现的频率</p>
+<p> <img src="https://bkimg.cdn.bcebos.com/formula/fe203680392734a30cefb370883dd051.svg" alt="img"> ，则： </p>
+<p> <img src="https://bkimg.cdn.bcebos.com/formula/232da3b3c28077bf425dde1b746dc0bc.svg" alt="img"> </p>
+<p> <img src="https://bkimg.cdn.bcebos.com/formula/ac3f8f80e661da32efe6868af4394867.svg" alt="img"></p>
+<p>​    </p>
+<p>​    3. 最优情况分析</p>
+<p>​        T(n)=输入规模为n时的最短运行时间</p>
+<p>​    4.渐近分析</p>
+<p>​        概念为忽略掉那些依赖于机器的常量，不去检查实际的运行时间，而是去看运行时间的增长</p>
+<p>​            θ符号：写个公式，弃去它的低阶项，并忽略前面的常数因子。</p>
+<p>​            例如:3n^3+9n^2-4n+5=θ(n^3)。</p>
+<p>利用渐近分析插入排序:</p>
+<p>操作数目计数——内存引用计数：计算实际上访问了某个变量多少次。</p>
+<p>​        T(n)= (j=2)-&gt;(j=n) =θ(n^2) 算术级数</p>
+<p>进行了j乘上某个参数:θ(j)次操作。</p>
+<p>现在分析插入排序是不是很快?</p>
+<p>当n很小的时候，速度很快，n很大的时候就不一样了。</p>
+<h3 id="三、归并排序"><a href="#三、归并排序" class="headerlink" title="三、归并排序"></a>三、归并排序</h3><p>针对数组a[1,2,3,…,n]</p>
+<p>1.如果n=1,完成排序</p>
+<p>2.递归地对A[1,…,n/2]和A[n/2+1,…,n]向上取整</p>
+<p>3.把排好序的两个表归并</p>
+<p>归并操作:</p>
+<p>1.观察两个表中最小的元素哪个更小，然后把最小的元素放到新的数组里</p>
+<p>2.再继续观察比较两个表中最小的元素哪个更小,同样取出来放到新的数组里</p>
+<p>对于规模为n的输入，T(n)=θ(n) 为线性时间，因为每次操作都是将两个表头进行比较，为线性阶次操作，每个操作耗费常数时间，所以总时间是θ(n)的。</p>
+<p>对于一个T(n),</p>
+<p>对于1.如果n=1,完成排序，则总时间为θ(1)，只使用了时间常数，只是耗费了固定数目的机器指令。</p>
+<p>对于2中，可以略写成2T(n/2)，总时间为θ(n)。</p>
+<p>也就是说：</p>
+<p>当n=1时,则T(n)=θ(1)。</p>
+<p>当n&gt;1时，则T(n)=2T(n/2)+θ(n)。</p>
+<p>递归树来方法:</p>
+<p>T(n)=2T(n/2)+cn     (c为大于0的常数，cn为隐式的θ(n))</p>
+<p>构造递归树的方法就是，我做了cn的工作，加上我必须在子节点节的处做T(n/2)+T(n/2),T(n/2)就是把T(n)分成两个表中的其中一个，然后继续以树状图的形式往下分每个T(n/2)再分成T(n/4)+T(n/4)两个子节点,然后一直往下分，一路算下去，直到1为止，因此，这个树的高度就为logn,这棵树的节点数就为n,叶节点的总数为θ(n)。</p>
+<p>计算总数=cn*logn+θ(n)。</p>
+<p>常数项省略最后就为:θ(nlogn)。</p>
+<p>考虑渐近情况，θ（nlogn)比θ快。</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论:"></a>结论:</h3><p>归并排序在一个充分大的输入规模下优于插入排序。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/06/10/%E7%AE%97%E6%B3%95%E4%B9%8B%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/" data-id="ckb9nm9nz0000jsnoe1ov0q9t" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Unity资源加载与优化续" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/06/07/Unity%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E4%B8%8E%E4%BC%98%E5%8C%96%E7%BB%AD/" class="article-date">
@@ -244,6 +346,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/06/10/%E7%AE%97%E6%B3%95%E4%B9%8B%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/">算法之算法分析</a>
+          </li>
         
           <li>
             <a href="/2020/06/07/Unity%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD%E4%B8%8E%E4%BC%98%E5%8C%96%E7%BB%AD/">Unity资源加载与优化续</a>
